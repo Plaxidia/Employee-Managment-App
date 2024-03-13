@@ -1,9 +1,7 @@
 import { Express } from "express";
-const express = require('express');
-
-// const bodyParser = require('body-parser');
-// const cors = require('cors');
-// const axios = require('axios');
+//const express = require("express");
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const PORT = process.env.PORT || 3001;
 
@@ -14,70 +12,58 @@ app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
-// app.get("/api", (req, res) => {
-//   res.json({ message: "Hello from server!" });
-// });
-
 // Enable CORS
 
 app.use(cors());
 app.use(bodyParser.json());
 
-// Get all tasks
-//app.get('/api/tasks', (req, res) => {
-//    res.json(tasks);
-//});
-
 //Get a single employee
 app.get('/employees/:id', async (req, res) => {
-  
-      const employee = employees.find(emp => emp.id === parseInt(req.params.id));
-      res.json(employee);
-  if  (!employee) {
-    return res.status(404).send('employee not found');
+  const employee = employees.find(emp => emp.id === parseInt(req.params.id));
+  if (!employee) {
+      return res.status(404).send('Employee not found');
   }
+  res.json(employee);
 });
 
 // Add a new employee
-app.post('/employees/:id', (req, res) => {
-    const {fistName , fastName} = req.body;
-    if(!firstName || !lastName) {
-      return res.status(400).send('Missing fistName or lastName');
-    
-    }
-    const newEmployee = { id: employees.length + 1, fistName , lastName };
-    employees.push(newEmployee);
-    //res.json(newEmployee);
-    return res.status(202).send(newEmployee);
+app.post('/employees', (req, res) => {
+  const { firstName, lastName } = req.body;
+  if (!firstName || !lastName) {
+      return res.status(400).send('Missing firstName or lastName');
+  }
+  const newEmployee = { id: employees.length + 1, firstName, lastName };
+  employees.push(newEmployee);
+  return res.status(202).json(newEmployee);
 });
 
-// Update a task
+// Update an employee
 app.put('/employees/update/:id', (req, res) => {
-    const employee = employees.find(emp => emp.id === parseInt(req.params.id));
-    res.json(employee);
-    
-    if (!employee) {
-      return res.status(404).send({  'employee not found' });
-        res.json(updatedTask);
-    } 
-    const {fistName , fastName} = req.body;
-    employee.firstName = fistName ||employee.fastName;
-    employee.lastName = lastName || employee,lastName;
-    res.json(employee);
+  const employee = employees.find(emp => emp.id === parseInt(req.params.id));
+  if (!employee) {
+      return res.status(404).send('Employee not found');
+  }
+  const { firstName, lastName } = req.body;
+  employee.firstName = firstName || employee.firstName;
+  employee.lastName = lastName || employee.lastName;
+  res.json(employee);
 });
 
-// Delete a task
+// Delete an employee
 app.delete('/employees/:id', (req, res) => {
-    //const taskId = req.params.id;
-    const index = employees.findIndex((emp) => emp.id === parseInt(req.params.id);
+  const index = employees.findIndex(emp => emp.id === parseInt(req.params.id));
+  if (index === -1) {
+      return res.status(404).send('Employee not found');
+  }
+  employees.splice(index, 1);
+  res.status(204).send();
+});
 
-    if (index === -1) {
-      return res.status(404).send({  'employee not found' });
-      
-    } 
-    employees.splice(index, 1);
-    res.status(204).send();
-});
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
+
+// );
+// INSERT INTO employees (first_name, last_name, email, gender,job_title, department) 
+// VALUES ('John', 'Doe', 'john.doe@example.com','male','Software Engineer', 'Engineering');
+// VALUES ('Jane', 'Smith', 'jane.smith@example.com', 'male', 'Marketing Manager', 'Marketing');
