@@ -1,16 +1,14 @@
-//import { Express } from "express";
-const express = require("express");
-const bodyParser = require('body-parser');
-const cors = require('cors');
 
-const PORT = process.env.PORT || 3001;
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+
+
+const PORT = process.env.PORT || 3004;
 
 const app = express();
 let employees =[];// A temporary in-memory "database" until you integrate a real database
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
 
 // Enable CORS
 
