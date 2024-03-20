@@ -15,25 +15,26 @@ const pool =mysql.createPool({
 
 }).promise();
 
-async function getEmployees(){
+export async function getEmployees(){
   const [rows] = await pool.query("SELECT * FROM employees")
   return rows
 }
 const employees =await getEmployees()
 console.log(employees)
 
-async function getEmployee(id){
+export async function getEmployee(id){
   const [rows] = await pool.query(
     "SELECT * FROM employees WHERE id = ?",[id])
   return rows[0]
 }
-const employee = await getEmployee(1)
+ const employee = await getEmployee(1)
 
-console.log(employee)
+ console.log(employee)
 
-async function createEmployee(first_name, last_name, email, gender, job_title, department) {
+export async function createEmployee(first_name, last_name, email, gender, job_title, department) {
   const result = await pool.query("INSERT INTO employees (first_name, last_name, email, gender, job_title, department) VALUES (?, ?, ?, ?, ?, ?)", [first_name, last_name, email, gender, job_title, department]);
-  return result;
+  const id =result.insertId;
+  return getEmployee(id)
 }
 
 const result = await createEmployee('test', 'test', 'test@test.com', 'male', 'Engineer', 'IT');

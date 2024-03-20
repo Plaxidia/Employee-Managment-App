@@ -1,14 +1,11 @@
-
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-
-
+ import { getEmployee,getEmployees,createEmployee } from './database.js';
 const PORT = process.env.PORT || 3004;
 
 const app = express();
 let employees =[];// A temporary in-memory "database" until you integrate a real database
-
 
 // Enable CORS
 
@@ -17,13 +14,14 @@ app.use(bodyParser.json());
 
 //Get a single employee
 app.get('/employees/:id', async (req, res) => {
-  const employee = employees.find(emp => emp.id === parseInt(req.params.id));
-  if (!employee) {
-      return res.status(404).send('Employee not found');
-  }
-  res.json(employee);
+  // const employee = employees.find(emp => emp.id === parseInt(req.params.id));
+  // if (!employee) {
+  //     return res.status(404).send('Employee not found');
+  // }
+  // res.json(employee);
+  const employees =await getEmployees();
+  res.send(employees);
 });
-
 // Add a new employee
 app.post('/employees', (req, res) => {
   const { firstName, lastName } = req.body;
