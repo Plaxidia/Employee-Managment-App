@@ -34,12 +34,13 @@ export async function getEmployee(id){
 export async function createEmployee(first_name, last_name, email, gender, job_title, department) {
   const result = await pool.query("INSERT INTO employees (first_name, last_name, email, gender, job_title, department) VALUES (?, ?, ?, ?, ?, ?)", [first_name, last_name, email, gender, job_title, department]);
   const id =result.insertId;
-  return getEmployee(id)
+  return await getEmployee(id);
 }
-
-const result = await createEmployee('test', 'test', 'test@test.com', 'male', 'Engineer', 'IT');
-console.log(result);
-
+export async function deleteEmployee(id) {
+  const result = await pool.query("DELETE FROM employees WHERE id = ?",[id]);
+  
+  return result;
+}
 
 
 
