@@ -43,7 +43,12 @@ export async function deleteEmployee(id) {
 }
 
 
-
+export async function updateEmployee(id) {
+  const query = "UPDATE employees SET first_name = ?, last_name = ?, email = ?, gender = ?, job_title = ?, department = ? WHERE id = ?";
+  // Construct the SQL query t o update the employee details
+  const result = await pool.query(query, [first_name, last_name, email, gender, job_title, department, id]);
+  return result;
+}
 
 
 
