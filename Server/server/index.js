@@ -45,17 +45,19 @@ app.post('/employee/add', async (req, res) => {
     res.status(201).send(newEmployee);
 });
 
+// update employee
+ 
 app.put('/employees/update/:id', async (req, res) => {
+  const id = req.params.id;
+  const { first_name, last_name, email, gender, job_title, department } = req.body;
   
-  const  id =  (req.params.id);
-  const { firstName, lastName,  email, gender, job_title, department } = req.body;
-  const existingEmployee = await updateEmployee(id);
-  if (!existingEmployee) {
-      return res.status(404).send('Employee not found');
+  try {
+      const updatedEmployee = await updateEmployee(id, first_name, last_name, email, gender, job_title, department);
+      res.status(204).send("Employee updated successfully");
+  } catch (error) {
+      console.error('Error updating employee:', error);
+      res.status(500).send('An error occurred while updating employee');
   }
-  const updatedEmployee = await updateEmployee(id, { firstName, lastName, email, gender, job_title, department });
-  res.status(204).send(updatedEmployee," updated");
-  
 });
 
 // Delete an employee

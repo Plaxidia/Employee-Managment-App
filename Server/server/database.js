@@ -43,11 +43,11 @@ export async function deleteEmployee(id) {
 }
 
 
-export async function updateEmployee(id) {
+export async function updateEmployee(id, first_name, last_name, email, gender, job_title, department) {
   const query = "UPDATE employees SET first_name = ?, last_name = ?, email = ?, gender = ?, job_title = ?, department = ? WHERE id = ?";
-  // Construct the SQL query t o update the employee details
   const result = await pool.query(query, [first_name, last_name, email, gender, job_title, department, id]);
-  return result;
+  const update = result.affectedRows; // This will give you the number of affected rows by the update operation
+  return update;
 }
 
 
