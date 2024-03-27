@@ -46,7 +46,6 @@ app.post('/employee/add', async (req, res) => {
 });
 
 // update employee
- 
 app.put('/employees/update/:id', async (req, res) => {
   const id = req.params.id;
   const { first_name, last_name, email, gender, job_title, department } = req.body;
