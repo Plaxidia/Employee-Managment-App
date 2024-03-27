@@ -6,6 +6,7 @@
     "@mui/material": "^5.15.14",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "mysql2": "^3.9.2"
+    "mysql2": "^3.9.2",
+    "react-router-dom": "^5.2.0"
   }
 }
