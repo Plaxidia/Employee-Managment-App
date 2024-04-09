@@ -1,11 +1,21 @@
+// import React from 'react';
 
-import './App.css';
+// import Home from './pages/home';
+// //import BasicTable from './pages/add';
+// //import NavBar from './pages/navbar';
 
-function App() {
-  return (
-    <div className="App">
-    </div>
-  );
-}
+// //import { BrowserRouter, Routes, Route} from 'react-router-dom'
 
-export default App;
+// function App() {
+//   return (
+//     <div></div>
+//   // <BrowserRouter>
+//   // <Routes>
+//   //   <Route path = '/' element ={<Home/>} />
+//   // </Routes>
+  
+//   // </BrowserRouter>
+//   );
+// }
+
+// export default App;
