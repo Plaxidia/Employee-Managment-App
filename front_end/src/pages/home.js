@@ -34,14 +34,12 @@ function Home() {
     maxWidth: 1050,
     minHeight: 400,
     maxHeight: 550,
-
     border: "1px solid black",
   });
   const CenteredContainer = styled("div")({
     display: "flex",
     justifyContent: "center",
     marginTop: 10,
-    //alignItems: "center",
     height: "100vh", // Adjust as needed to center vertically
   });
 
@@ -56,29 +54,55 @@ function Home() {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
 
-  useEffect(() => {
-    // Disable scrolling when the component mounts
-    document.body.style.overflow = "hidden";
-    // Re-enable scrolling when the component unmounts
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
+  // useEffect(() => {
+  //   // Disable scrolling when the component mounts
+  //   document.body.style.overflow = "hidden";
+  //   // Re-enable scrolling when the component unmounts
+  //   return () => {
+  //     document.body.style.overflow = "auto";
+  //   };
+  // }, []);
+
+  //const [employees, setEmployee] = useState([]);
+  const [searchTerm, setSearchedITerm] = useState('');
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await axios.get("http://localhost:8080/employees"); // Replace with your backend endpoint
+  //       setEmployee(res.data); // Set the fetched data to the state
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+  // const filteredEmployees = employees.filter(employee =>
+  //   employee.first_name.toLowerCase().includes(searchTerm) ||
+  //   employee.last_name.toLowerCase().includes(searchTerm) ||
+  //   employee.email.toLowerCase().includes(searchTerm) || 
+  //   employee.gender.toLowerCase().includes(searchTerm) ||
+  //   employee.job_title.toLowerCase().includes(searchTerm) ||
+  //   employee.department.toLowerCase().includes(searchTerm)
+  // );
+  const filteredRows = rows.filter((row) =>
+  Object.values(row).some((value) =>
+    typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+);
+
 
   return (
     <div>
       <Box>
         <Box sx={{ flexGrow: 1, 
-          //backgroundColor: "lightblue",
            marginTop: 4 }}>
           <AppBar
             position="static"
             sx={{ backgroundColor: "grey", color: "white" }}
-          >
+            >
             <Toolbar>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 Employee Managmment App
@@ -86,23 +110,11 @@ function Home() {
             </Toolbar>
           </AppBar>
         </Box>
-        {/* <Box
-          sx={{
-            marginTop: 1,
-            marginBottom: 0,
-            display: "flex",
-            //alignItems: "",
-          }}
-        >
-          <TextField id="demo-helper-text-aligned" label="Search" />
-          <Button> add employee</Button>
-        </Box> */}
         {/* Search and button */}
         <Paper
           component="form"
           sx={{
             p: "2px 4px",
-            //display: "flex",
             marginLeft: 23,
             marginTop:2,
             alignItems: "center",
@@ -116,6 +128,7 @@ function Home() {
             sx={{ ml: 1, flex: 1 }}
             placeholder="Search an Employee"
             inputProps={{ "aria-label": "search an" }}
+            value={searchTerm} onChange={(e) => setSearchedITerm(e.target.value)}   
           />
           <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
             <SearchIcon />
@@ -166,7 +179,7 @@ function Home() {
               </TableHead>
 
               <TableBody>
-                {rows.map((row, index) => (
+                {filteredRows.map((row, index) => (
                   <TableRow key={index}>
                     <TableCell>{row.first_name}</TableCell>
                     <TableCell>{row.last_name}</TableCell>
@@ -328,4 +341,70 @@ export default Home;
                   </Button>
                 </TableCell>
               </TableRow>
-            </TableFooter>*/
+            </TableFooter>
+            
+            ....
+            
+            
+            import React, { useState } from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField } from '@mui/material';
+
+function EmployeeTable({ employees }) {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Filtered employees based on the search term
+  const filteredEmployees = employees.filter(employee =>
+    employee.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    employee.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    employee.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    employee.gender.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    employee.job_title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    employee.department.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <div>
+      
+      <TextField
+      label="Search Employees"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      variant="outlined"
+      fullWidth
+      margin="normal"
+    />
+
+   
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>First Name</TableCell>
+            <TableCell>Last Name</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Gender</TableCell>
+            <TableCell>Job Title</TableCell>
+            <TableCell>Department</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+         
+          {filteredEmployees.map(employee => (
+            <TableRow key={employee.id}>
+              <TableCell>{employee.first_name}</TableCell>
+              <TableCell>{employee.last_name}</TableCell>
+              <TableCell>{employee.email}</TableCell>
+              <TableCell>{employee.gender}</TableCell>
+              <TableCell>{employee.job_title}</TableCell>
+              <TableCell>{employee.department}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </div>
+);
+}
+
+export default EmployeeTable;
+*/
