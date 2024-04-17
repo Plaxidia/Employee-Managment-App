@@ -28,6 +28,7 @@ import {
 
 import { styled } from "@mui/system";
 // Import styled from @mui/system
+import AddEmployee from "./AddEmployee";
 function Home() {
   const StyledTableContainer = styled(TableContainer)({
     minWidth: 450,
@@ -57,36 +58,17 @@ function Home() {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   // Disable scrolling when the component mounts
-  //   document.body.style.overflow = "hidden";
-  //   // Re-enable scrolling when the component unmounts
-  //   return () => {
-  //     document.body.style.overflow = "auto";
-  //   };
-  // }, []);
+  useEffect(() => {
+    // Disable scrolling when the component mounts
+    document.body.style.overflow = "hidden";
+    // Re-enable scrolling when the component unmounts
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
-  //const [employees, setEmployee] = useState([]);
   const [searchTerm, setSearchedITerm] = useState('');
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await axios.get("http://localhost:8080/employees"); // Replace with your backend endpoint
-  //       setEmployee(res.data); // Set the fetched data to the state
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-  // const filteredEmployees = employees.filter(employee =>
-  //   employee.first_name.toLowerCase().includes(searchTerm) ||
-  //   employee.last_name.toLowerCase().includes(searchTerm) ||
-  //   employee.email.toLowerCase().includes(searchTerm) || 
-  //   employee.gender.toLowerCase().includes(searchTerm) ||
-  //   employee.job_title.toLowerCase().includes(searchTerm) ||
-  //   employee.department.toLowerCase().includes(searchTerm)
-  // );
+  
   const filteredRows = rows.filter((row) =>
   Object.values(row).some((value) =>
     typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
@@ -144,6 +126,7 @@ function Home() {
             },}}>
             Add New employee
           </Button>
+          <AddEmployee/>
         </Paper>
 
         {/* table */}
