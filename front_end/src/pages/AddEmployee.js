@@ -1,19 +1,110 @@
-// import React, {  useState } from "react";
-// import Modal from 'react-bootstrap/Modal';
+import React, {  useState } from "react";
+//import Modal from 'react-bootstrap/Modal';
+import { useNavigate } from "react-router-dom";
+import { Box, Button } from "@mui/material";
 
-// export default function AddEmployee (props){
+import { Link } from "react-router-dom";
 
-//     const[name, setName]= useState( ' ');
-//     const[last_name, setLastName]= useState( ' ');
-//     const[email, setEmail]= useState( ' ');
-//     const[gender, setGender]= useState( ' ');
-//     const[job_title, setJobtitle]= useState( ' ');
-//     const[department, setDepartment]= useState( ' ');
-    
-//     return(
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import { useHistory } from 'react-router-dom'; // Import useHistory hook from React Router
 
-//         <div>
+export default function AddEmployee (props){
 
-//         </div>
-//     )
-// }
+  const navigate = useNavigate();
+
+  const [name, setName] = useState('');
+           const [age, setAge] = useState('');
+           const [position, setPosition] = useState('');
+           const history = useHistory(); // Initialize useHistory hook
+         
+           const handleSubmit = (e) => {
+             e.preventDefault();
+             // Here you can add logic to submit the employee data, for example, send it to a backend server
+             const employeeData = {
+               name: name,
+               age: age,
+               position: position
+             };
+             console.log("Submitted:", employeeData);
+             // Reset form fields after submission
+             setName('');
+             setAge('');
+             setPosition('');
+            };
+             
+
+           const handleCancel = () => {
+            // Reset form fields
+            setName('');
+            setAge('');
+            setPosition('');
+            // Navigate back to the home page
+            history.push('/');
+          };
+    return(
+      <div>
+
+      <Box sx={{ flexGrow: 1, 
+        marginTop: 4 }}>
+       <AppBar
+         position="static"
+         sx={{ backgroundColor: "grey", color: "white" }}
+         >
+         <Toolbar>
+           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+             Employee Managmment App
+           </Typography>
+         </Toolbar>
+       </AppBar>
+     </Box>
+        
+          <Link to="/">Go Back</Link>
+            <Box>
+ 
+               <Button onClick={() => navigate(-1)}> Back
+               </Button>
+               <form onSubmit={handleSubmit}>
+                 <div>
+                   <label>Name:</label>
+                   <input
+                     type="text"
+                     value={name}
+                     onChange={(e) => setName(e.target.value)}
+                     required
+                   />
+                 </div>
+                 <div>
+                   <label>Age:</label>
+                   <input
+                     type="number"
+                     value={age}
+                     onChange={(e) => setAge(e.target.value)}
+                     required
+                   />
+                 </div>
+                 <div>
+                   <label>Position:</label>
+                   <input
+                     type="text"
+                     value={position}
+                     onChange={(e) => setPosition(e.target.value)}
+                     required
+                   />
+                 </div>
+                 <Button type="submit">Add Employee</Button>
+                 <Button type="button" onClick={handleCancel}>Cancel</Button>
+               </form>    
+        </Box>
+        
+        </div>
+    )
+}
+// const[name, setName]= useState( ' ');
+    // const[last_name, setLastName]= useState( ' ');
+    // const[email, setEmail]= useState( ' ');
+    // const[gender, setGender]= useState( ' ');
+    // const[job_title, setJobtitle]= useState( ' ');
+    // const[department, setDepartment]= useState( ' ');
+   

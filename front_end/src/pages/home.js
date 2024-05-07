@@ -29,6 +29,8 @@ import {
 import { styled } from "@mui/system";
 // Import styled from @mui/system
 import AddEmployee from "./AddEmployee";
+import { useNavigate } from "react-router-dom";
+
 function Home() {
   const StyledTableContainer = styled(TableContainer)({
     minWidth: 450,
@@ -58,14 +60,14 @@ function Home() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    // Disable scrolling when the component mounts
-    document.body.style.overflow = "hidden";
-    // Re-enable scrolling when the component unmounts
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
+  // useEffect(() => {
+  //   // Disable scrolling when the component mounts
+  //   document.body.style.overflow = "hidden";
+  //   // Re-enable scrolling when the component unmounts
+  //   return () => {
+  //     document.body.style.overflow = "auto";
+  //   };
+  // }, []);
 
   const [searchTerm, setSearchedITerm] = useState('');
   
@@ -75,6 +77,14 @@ function Home() {
   )
 );
 
+const Navigate = useNavigate();
+
+const [showAddEmployee, setShowAddEmployee] = useState(false);
+
+const handleAddEmployeeClick = () => {
+  setShowAddEmployee(true);
+  Navigate("/add-employee");// Navigate to the "/add-employee" route
+};
 
   return (
     <div>
@@ -116,7 +126,9 @@ function Home() {
             <SearchIcon />
           </IconButton>
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-          <Button  sx={{ 
+          {/* <Button 
+          onClick={() => navigate("/add-employee")}
+           sx={{ 
             color:"white",
             p: "10px" ,
             background: "grey",
@@ -125,8 +137,26 @@ function Home() {
               background: "lightgrey",
             },}}>
             Add New employee
-          </Button>
-          <AddEmployee/>
+
+          </Button> 
+          <AddEmployee/>*/
+          }
+          <Button
+            onClick={handleAddEmployeeClick}
+        sx={{
+          color: "white",
+          p: "10px",
+          background: "grey",
+          "&:hover": {
+            color: "white",
+            background: "lightgrey",
+          },
+        }
+    }
+      >
+        Add New employee
+      </Button>
+      {showAddEmployee && <AddEmployee />}
         </Paper>
 
         {/* table */}

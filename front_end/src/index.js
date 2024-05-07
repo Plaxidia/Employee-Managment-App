@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import Home from "./pages/home";
+import AddEmployee from "./pages/AddEmployee";
 //import App from "./App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -10,6 +11,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/add-employee" element={<AddEmployee />} />
       </Routes>
     </BrowserRouter>
   </div>
