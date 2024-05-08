@@ -2,22 +2,22 @@ import React, {  useState } from "react";
 //import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from "react-router-dom";
 import { Box, Button } from "@mui/material";
-
+import Card from '@mui/material/Card';
 import { Link } from "react-router-dom";
-
+import CardContent from '@mui/material/CardContent';
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { useHistory } from 'react-router-dom'; // Import useHistory hook from React Router
+//import { useHistory } from 'react-router-dom'; // Import useHistory hook from React Router
 
-export default function AddEmployee (props){
+export default function AddEmployee (props ){
 
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
            const [age, setAge] = useState('');
            const [position, setPosition] = useState('');
-           const history = useHistory(); // Initialize useHistory hook
+           //const history = useHistory(); // Initialize useHistory hook
          
            const handleSubmit = (e) => {
              e.preventDefault();
@@ -41,7 +41,7 @@ export default function AddEmployee (props){
             setAge('');
             setPosition('');
             // Navigate back to the home page
-            history.push('/');
+            navigate('/');
           };
     return(
       <div>
@@ -98,7 +98,35 @@ export default function AddEmployee (props){
                </form>    
         </Box>
         
-        </div>
+       
+        <Card 
+        sx={{ 
+          marginTop: 4,
+          
+          
+          position:"static",
+            backgroundColor: "White", 
+            color: "grey" 
+        }}>
+        <CardContent  >
+
+
+          <Typography variant="h5" component="div">
+            
+          </Typography>
+          <Typography color="text.secondary">
+            
+          </Typography>
+          <Typography color="text.secondary">
+            
+          </Typography>
+        </CardContent>
+        
+        <Button type="submit">Add Employee</Button>
+        <Button type="button" onClick={handleCancel}>Cancel</Button>
+        
+      </Card>
+      </div>
     )
 }
 // const[name, setName]= useState( ' ');
