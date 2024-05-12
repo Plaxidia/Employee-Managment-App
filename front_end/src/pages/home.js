@@ -7,8 +7,7 @@ import axios from "axios";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-//import TextField from "@mui/material/TextField";
-//import SearchIcon from '@mui/icons-material/Search';
+
 import SearchIcon from "@mui/icons-material/Search";
 
 import InputBase from "@mui/material/InputBase";
@@ -30,6 +29,7 @@ import { styled } from "@mui/system";
 // Import styled from @mui/system
 import AddEmployee from "./AddEmployee";
 import { useNavigate } from "react-router-dom";
+import View from "./viewpage";
 
 function Home() {
   const StyledTableContainer = styled(TableContainer)({
@@ -86,6 +86,13 @@ const handleAddEmployeeClick = () => {
   Navigate("/add-employee");// Navigate to the "/add-employee" route
 };
 
+const [showView, setView] = useState(false);
+
+const handleViewClick = () => {
+  setView(true);
+  Navigate("/view");// Navigate to the "/view" route
+};
+
   return (
     <div>
       <Box>
@@ -127,20 +134,7 @@ const handleAddEmployeeClick = () => {
             <SearchIcon />
           </IconButton>
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-          {/* <Button 
-          onClick={() => navigate("/add-employee")}
-           sx={{ 
-            color:"white",
-            p: "10px" ,
-            background: "grey",
-            "&:hover": {
-              color: "white",
-              background: "lightgrey",
-            },}}>
-            Add New employee
-
-          </Button> 
-          <AddEmployee/>*/
+          {
           }
           <Button
             onClick={handleAddEmployeeClick}
@@ -157,9 +151,8 @@ const handleAddEmployeeClick = () => {
       >
         Add New employee
       </Button>
-      {showAddEmployee && <AddEmployee />}
+      {showAddEmployee && <AddEmployee/>}
         </Paper>
-
         {/* table */}
         <CenteredContainer>
           <StyledTableContainer component={Paper}>
@@ -206,6 +199,7 @@ const handleAddEmployeeClick = () => {
                       <td>
                         <Box sx={{ display: "flex", width: "50%", gap: 1 }}>
                           <VisibilityOutlinedIcon
+                          onClick={handleViewClick}
                             sx={{
                               display: "flex",
                               justifyContent: "center",
@@ -217,7 +211,9 @@ const handleAddEmployeeClick = () => {
                                 background: "#e6e2f0",
                               },
                             }}
+                            
                           />
+                          {showView && <View/>}
                           <ModeEditOutlineOutlinedIcon
                             sx={{
                               display: "flex",
