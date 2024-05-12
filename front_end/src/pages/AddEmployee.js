@@ -1,4 +1,4 @@
-import React, {  useState,useEffect } from "react";
+import React, {useEffect } from "react";
 //import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from "react-router-dom";
 import { Box, Button,  } from "@mui/material";
@@ -31,7 +31,7 @@ export default function AddEmployee (props ){
 
       <Box sx={{ 
         flexGrow: 1, 
-        marginTop: 4 }}>
+         }}>
        <AppBar
          position="static"
          sx={{ backgroundColor: "grey", color: "white" }}

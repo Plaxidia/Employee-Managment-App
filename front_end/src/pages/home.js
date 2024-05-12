@@ -65,7 +65,7 @@ function Home() {
     document.body.style.overflow = "hidden";
     // Re-enable scrolling when the component unmounts
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "fixed";
     };
    }, []);
 
@@ -90,7 +90,7 @@ const handleAddEmployeeClick = () => {
     <div>
       <Box>
         <Box sx={{ flexGrow: 1, 
-           marginTop: 4 }}>
+           }}>
           <AppBar
             position="static"
             sx={{ backgroundColor: "grey", color: "white" }}
