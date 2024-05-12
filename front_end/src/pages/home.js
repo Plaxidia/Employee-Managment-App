@@ -60,14 +60,14 @@ function Home() {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   // Disable scrolling when the component mounts
-  //   document.body.style.overflow = "hidden";
-  //   // Re-enable scrolling when the component unmounts
-  //   return () => {
-  //     document.body.style.overflow = "auto";
-  //   };
-  // }, []);
+  useEffect(() => {
+    // Disable scrolling when the component mounts
+    document.body.style.overflow = "hidden";
+    // Re-enable scrolling when the component unmounts
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+   }, []);
 
   const [searchTerm, setSearchedITerm] = useState('');
   
@@ -104,6 +104,7 @@ const handleAddEmployeeClick = () => {
         </Box>
         {/* Search and button */}
         <Paper
+        
           component="form"
           sx={{
             p: "2px 4px",

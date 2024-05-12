@@ -1,52 +1,36 @@
-import React, {  useState } from "react";
+import React, {  useState,useEffect } from "react";
 //import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from "react-router-dom";
-import { Box, Button } from "@mui/material";
+import { Box, Button,  } from "@mui/material";
 import Card from '@mui/material/Card';
-import { Link } from "react-router-dom";
-import CardContent from '@mui/material/CardContent';
+
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-//import { useHistory } from 'react-router-dom'; // Import useHistory hook from React Router
-
+import TextField from '@mui/material/TextField';
 export default function AddEmployee (props ){
+
+  useEffect(() => {
+    // Disable scrolling when the component mounts
+    document.body.style.overflow = "hidden";
+    // Re-enable scrolling when the component unmounts
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+   }, []);
 
   const navigate = useNavigate();
 
-  const [name, setName] = useState('');
-           const [age, setAge] = useState('');
-           const [position, setPosition] = useState('');
-           //const history = useHistory(); // Initialize useHistory hook
-         
-           const handleSubmit = (e) => {
-             e.preventDefault();
-             // Here you can add logic to submit the employee data, for example, send it to a backend server
-             const employeeData = {
-               name: name,
-               age: age,
-               position: position
-             };
-             console.log("Submitted:", employeeData);
-             // Reset form fields after submission
-             setName('');
-             setAge('');
-             setPosition('');
-            };
-             
-
-           const handleCancel = () => {
-            // Reset form fields
-            setName('');
-            setAge('');
-            setPosition('');
-            // Navigate back to the home page
+  const handleCancel = () => {
+            // // Navigate back to the home page
             navigate('/');
-          };
+  };
+ 
     return(
       <div>
 
-      <Box sx={{ flexGrow: 1, 
+      <Box sx={{ 
+        flexGrow: 1, 
         marginTop: 4 }}>
        <AppBar
          position="static"
@@ -59,72 +43,160 @@ export default function AddEmployee (props ){
          </Toolbar>
        </AppBar>
      </Box>
-        
-          <Link to="/">Go Back</Link>
-            <Box>
- 
-               <Button onClick={() => navigate(-1)}> Back
-               </Button>
-               <form onSubmit={handleSubmit}>
-                 <div>
-                   <label>Name:</label>
-                   <input
-                     type="text"
-                     value={name}
-                     onChange={(e) => setName(e.target.value)}
-                     required
-                   />
-                 </div>
-                 <div>
-                   <label>Age:</label>
-                   <input
-                     type="number"
-                     value={age}
-                     onChange={(e) => setAge(e.target.value)}
-                     required
-                   />
-                 </div>
-                 <div>
-                   <label>Position:</label>
-                   <input
-                     type="text"
-                     value={position}
-                     onChange={(e) => setPosition(e.target.value)}
-                     required
-                   />
-                 </div>
-                 <Button type="submit">Add Employee</Button>
-                 <Button type="button" onClick={handleCancel}>Cancel</Button>
-               </form>    
-        </Box>
-        
-       
-        <Card 
+<Card 
         sx={{ 
           marginTop: 4,
-          
-          
+          marginLeft:"28%",
+          borderColor:"black", 
           position:"static",
             backgroundColor: "White", 
-            color: "grey" 
+            color: "grey", 
+            maxWidth:620,
+            
         }}>
-        <CardContent  >
+          <Box sx={{ 
+        flexGrow: 1, 
+        marginTop: 0}}>
+       <AppBar
+         position="static"
+         sx={{ backgroundColor: "lightgrey", color: "white" }}
+         >
+         <Toolbar>
+           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+             Add Employee 
+           </Typography>
+           <Button sx={{
+            color:'white',
+            background: "grey",
+            cursor: "pointer",
+                              "&:hover": {
+                                color: "",
+                                background: "#e6e2f0",
+                              },
+           }}
+           onClick={() => navigate(-1)}> Back
+               </Button>
+         </Toolbar>
+       </AppBar>
+     </Box>
 
+  <Box >
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        '& > :not(style)': { m: 1 },
+      }}
+    >
+      <TextField
+          id="standard-multiline-flexible"
+          label="First Name"
+          multiline
+          maxRows={8}
+          variant="standard"
+        />
+      
+       <TextField
+          id="standard-multiline-flexible"
+          label="Last Name"
+          multiline
+          maxRows={8}
+          variant="standard"
+        />
+     </Box>
+     <Box
+     sx={{
+      display: 'flex',
+      alignItems: 'center',
+      '& > :not(style)': { m: 1 },
+    }}
+     >
+      <TextField
+          id="standard-multiline-flexible"
+          label="Email"
+          //multiline
+          maxRows={1}
+          variant="standard"
+        />
+     </Box>
 
-          <Typography variant="h5" component="div">
-            
-          </Typography>
-          <Typography color="text.secondary">
-            
-          </Typography>
-          <Typography color="text.secondary">
-            
-          </Typography>
-        </CardContent>
-        
-        <Button type="submit">Add Employee</Button>
-        <Button type="button" onClick={handleCancel}>Cancel</Button>
-        
+     <Box
+     sx={{
+      display: 'flex',
+      alignItems: 'center',
+      '& > :not(style)': { m: 1 },
+    }}
+     >
+      <TextField
+          id="standard-multiline-flexible"
+          label="Gender"
+          //multiline
+          maxRows={1}
+          variant="standard"
+        />
+     </Box>
+     <Box
+     sx={{
+      display: 'flex',
+      alignItems: 'center',
+      '& > :not(style)': { m: 1 },
+    }}
+     >
+      <TextField
+          id="standard-multiline-flexible"
+          label="Job Title"
+          multiline
+          maxRows={8}
+          variant="standard"
+        />
+        <TextField
+          id="standard-multiline-flexible"
+          label="Department"
+          multiline
+          maxRows={8}
+          variant="standard"
+        />
+     </Box>
+     <Box
+     sx={{
+      '& > :not(style)': { m: 1 },
+      position: 'relative',
+          bottom: 0,
+          right: 0,
+          display: 'flex',
+          justifyContent: 'flex-end',
+          padding: '8px',
+    }}
+     >
+    <Button 
+      sx={{
+        color:'white',
+            background: "grey",
+            cursor: "pointer",
+                              "&:hover": {
+                                color: "",
+                                background: "#e6e2f0",
+                              }
+                            }}type="submit">
+          Add Employee
+      </Button>
+    <Button sx={{
+      color:'white',
+      background: "grey",
+      cursor: "pointer",
+                        "&:hover": {
+                          color: "",
+                          background: "#e6e2f0",
+                        },
+    }} 
+    type="button" onClick={handleCancel}>
+    Cancel
+    </Button>
+
+    </Box >
+    
+  </Box>
+      
       </Card>
       </div>
     )
