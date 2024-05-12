@@ -4,6 +4,7 @@ import Home from "./pages/home";
 import AddEmployee from "./pages/AddEmployee";
 //import App from "./App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import View from "./pages/viewpage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -12,6 +13,7 @@ root.render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/add-employee" element={<AddEmployee />} />
+        <Route path="/view" element={<View />} />
       </Routes>
     </BrowserRouter>
   </div>

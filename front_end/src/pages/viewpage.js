@@ -9,7 +9,8 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-export default function View() {
+import { useParams } from 'react-router-dom';
+export default function View({match}) {
   useEffect(() => {
     // Disable scrolling when the component mounts
     document.body.style.overflow = "hidden";
@@ -36,10 +37,16 @@ export default function View() {
 
 
   }); // State to store fetched data
+  //const { id } = useParams();
+  const { params } = match;
+// eslint-disable-next-line no-unused-vars
+const id = params.id;
+
+  //const product = products.find((p) => p._id === params.id);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/employee"); // Replace with your backend endpoint
+        const res = await axios.get("http://localhost:8080/employee/" +match.params.id); // Replace with your backend endpoint
         const fetchedData = res.data; // Extract the fetched data from the response
         setData(fetchedData); // Set the fetched data to the state
       } catch (error) {
@@ -47,7 +54,7 @@ export default function View() {
       }
     };
     fetchData();
-  }, []);
+  }, [match.params.id]);
 
 //   useEffect(() => {
 //     const fetchData = async () => {
