@@ -26,12 +26,18 @@ app.get('/employees', async (req, res) => {
 
 //Get a single employee
 app.get('/employee/:id', async (req, res) => {
+  try{
   const id = req.params.id;
   const employee =await getEmployee(id);
-  res.send(employee);
+  
   if (!employee ){
-    res.status(400).send('Employee with this id does not exist');
+    res.status(404).send('Employee with this id does not exist');
   }
+  res.send(employee);
+} catch (error) {
+  console.error('Error fetching employee:', error);
+  res.status(500).send('Internal server error');
+}
 });
 
 // Add a new employee
