@@ -20,7 +20,6 @@ import {
   TableHead,
   TableBody,
   TableRow,
-  // TableFooter,
   TableCell,
   Paper,
 } from "@mui/material";
@@ -45,7 +44,6 @@ function Home() {
     marginTop: 10,
     height: "100vh", // Adjust as needed to center vertically
   });
-
   const [rows, setRows] = useState([]); // State to store fetched data
 
   useEffect(() => {
@@ -78,14 +76,12 @@ function Home() {
 );
 
 const Navigate = useNavigate();
-
 const [showAddEmployee, setShowAddEmployee] = useState(false);
 
 const handleAddEmployeeClick = () => {
   setShowAddEmployee(true);
   Navigate("/add-employee");// Navigate to the "/add-employee" route
 };
-
 const [showView, setView] = useState(false);
 
 const handleViewClick = (id) => {
@@ -199,7 +195,8 @@ const handleViewClick = (id) => {
                       <td>
                         <Box sx={{ display: "flex", width: "50%", gap: 1 }}>
                           <VisibilityOutlinedIcon
-                          onClick={handleViewClick(row.id)}
+                            onClick={() => handleViewClick(row.id)}
+                          
                             sx={{
                               display: "flex",
                               justifyContent: "center",

@@ -14,6 +14,7 @@ root.render(
         <Route path="/" element={<Home />} />
         <Route path="/add-employee" element={<AddEmployee />} />
         <Route path="/view/:id" element={<View />} />
+        
       </Routes>
     </BrowserRouter>
   </div>

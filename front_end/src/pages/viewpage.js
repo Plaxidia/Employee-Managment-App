@@ -6,9 +6,9 @@ import Card from "@mui/material/Card";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-//import TextField from "@mui/material/TextField";
+import TextField from "@mui/material/TextField";
 import axios from "axios";
-
+import ArrowBackIosNewSharpIcon from "@mui/icons-material/ArrowBackIosNewSharp";
 export default function View() {
 
   useEffect(() => {
@@ -21,17 +21,11 @@ export default function View() {
       }, []);
     
   const navigate = useNavigate();
-
-  // const handleCancel = () => {
-  //   navigate("/");
-  // };
   const handleCancel = () => {
     // Check if the current route is already "/"
     if (window.location.pathname !== "/") {
       // If not, navigate to "/"
       navigate("/");
-      //navigate(-1); // Go back to the previous page
-
     }
   };
   
@@ -80,13 +74,15 @@ export default function View() {
                 View Employee
               </Typography>
               <Button sx={{ color: "white", background: "grey", cursor: "pointer", "&:hover": { color: "", background: "#e6e2f0" } }} onClick={() => navigate(-1)}>
+              <ArrowBackIosNewSharpIcon/>
                 Back
               </Button>
+              
             </Toolbar>
           </AppBar>
         </Box>
 
-        {/* <Box>
+        <Box>
           <Box sx={{ display: "flex", alignItems: "center", "& > :not(style)": { m: 1 } }}>
             <TextField id="first-name" label="First Name" value={employee.first_name} variant="standard" />
             <TextField id="last-name" label="Last Name" value={employee.last_name} variant="standard" />
@@ -101,18 +97,7 @@ export default function View() {
             <TextField id="job-title" label="Job Title" value={employee.job_title} variant="standard" />
             <TextField id="department" label="Department" value={employee.department} variant="standard" />
           </Box> 
-        </Box>  */}
-
-        <Box>
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start", p: 2 }}>
-            <Typography variant="body1">First Name: {employee.firstName}</Typography>
-            <Typography variant="body1">Last Name: {employee.lastName}</Typography>
-            <Typography variant="body1">Email: {employee.email}</Typography>
-            <Typography variant="body1">Gender: {employee.gender}</Typography>
-            <Typography variant="body1">Job Title: {employee.jobTitle}</Typography>
-            <Typography variant="body1">Department: {employee.department}</Typography>
-          </Box>
-        </Box>
+        </Box>  
 
         <Box sx={{ "& > :not(style)": { m: 1 }, position: "relative", bottom: 0, right: 0, display: "flex", justifyContent: "flex-end", padding: "8px" }}>
           <Button sx={{ color: "white", background: "grey", cursor: "pointer", "&:hover": { color: "", background: "#e6e2f0" } }} type="button" onClick={handleCancel}>
