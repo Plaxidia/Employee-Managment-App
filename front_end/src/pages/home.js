@@ -88,9 +88,9 @@ const handleAddEmployeeClick = () => {
 
 const [showView, setView] = useState(false);
 
-const handleViewClick = () => {
+const handleViewClick = (id) => {
   setView(true);
-  Navigate("/view");// Navigate to the "/view" route
+  Navigate(`/view/${id}`);// Navigate to the "/view" route
 };
 
   return (
@@ -199,7 +199,7 @@ const handleViewClick = () => {
                       <td>
                         <Box sx={{ display: "flex", width: "50%", gap: 1 }}>
                           <VisibilityOutlinedIcon
-                          onClick={handleViewClick}
+                          onClick={handleViewClick(row.id)}
                             sx={{
                               display: "flex",
                               justifyContent: "center",
@@ -255,166 +255,3 @@ const handleViewClick = () => {
 }
 
 export default Home;
-
-/* <Button
-                        size="sm"
-                        variant="soft"
-                        sx={{
-                          width: "5%",
-                          color: "black",
-
-                          borderColor: '"blue"',
-                          border: "0.1px solid blue ",
-                          "&:hover": {
-                            // Override hover styles with empty values
-                            color: "black",
-                            //borderColor: 'green',
-                            border: '2px solid "neutral" ',
-                            backgroundColor: "neutral",
-                          },
-                        }}
-                      >
-                        View
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="plain"
-                        sx={{
-                          width: "10%",
-                          color: "black",
-                          borderColor: '"lightblue"',
-                          border: "2px solid lightblue ",
-                          "&:hover": {
-                            // Override hover styles with empty values
-                            color: "black",
-                            //borderColor: 'green',
-                            border: '2px solid "lightblue" ',
-                            backgroundColor: "lightblue",
-                          },
-                        }}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="soft"
-                        sx={{
-                          width: "10%",
-                          color: "black",
-                          borderColor: '"red"',
-                          border: "0.5px solid red ",
-                          "&:hover": {
-                            // Override hover styles with empty values
-                            color: "black",
-                            //borderColor: 'green',
-                            border: '2px solid "red" ',
-                            backgroundColor: "red",
-                          },
-                        }}
-                      >
-                        Delete
-                      </Button> 
-                      
-                      <TableFooter
-              sx={{
-                maxWidth: 100,
-                position: "sticky",
-                bottom: 0,
-                //backgroundColor: "lightblue",
-              }}
-            >
-              <TableRow>
-                <TableCell
-                  colSpan={10}
-                  sx={{ fontSize: "small", textAlign: "right" }}
-                >
-                  <Button
-                    variant="soft"
-                    sx={{
-                      top: 0,
-                      right: 0,
-                      marginRight: 4,
-                      width: "8%",
-                      color: "black",
-                      backgroundColor: "transparent",
-                      "&:hover": {
-                        // Override hover styles with empty values
-                        color: "black",
-
-                        border: '2px solid "black" ',
-                        background: "grey",
-                      },
-                    }}
-                  >
-                    <ArrowBackIosNewSharpIcon />
-                    Back
-                  </Button>
-                </TableCell>
-              </TableRow>
-            </TableFooter>
-            
-            ....
-            
-            
-            import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField } from '@mui/material';
-
-function EmployeeTable({ employees }) {
-  const [searchTerm, setSearchTerm] = useState('');
-
-  // Filtered employees based on the search term
-  const filteredEmployees = employees.filter(employee =>
-    employee.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    employee.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    employee.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    employee.gender.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    employee.job_title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    employee.department.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  return (
-    <div>
-      
-      <TextField
-      label="Search Employees"
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      variant="outlined"
-      fullWidth
-      margin="normal"
-    />
-
-   
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>First Name</TableCell>
-            <TableCell>Last Name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Gender</TableCell>
-            <TableCell>Job Title</TableCell>
-            <TableCell>Department</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-         
-          {filteredEmployees.map(employee => (
-            <TableRow key={employee.id}>
-              <TableCell>{employee.first_name}</TableCell>
-              <TableCell>{employee.last_name}</TableCell>
-              <TableCell>{employee.email}</TableCell>
-              <TableCell>{employee.gender}</TableCell>
-              <TableCell>{employee.job_title}</TableCell>
-              <TableCell>{employee.department}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  </div>
-);
-}
-
-export default EmployeeTable;
-*/

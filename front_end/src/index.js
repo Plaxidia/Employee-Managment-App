@@ -13,7 +13,7 @@ root.render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/add-employee" element={<AddEmployee />} />
-        <Route path="/view" element={<View />} />
+        <Route path="/view/:id" element={<View />} />
       </Routes>
     </BrowserRouter>
   </div>
