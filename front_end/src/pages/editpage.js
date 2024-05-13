@@ -49,17 +49,23 @@ export default function Edit() {
     };
     fetchData();
   }, [id]);
-  const [isEditable, setIsEditable] = useState(false);
-  const [value, setValue] = useState('Initial Value');
-
-  const handleEditToggle = () => {
-    setIsEditable(!isEditable);
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEmployee((prevEmployee) => ({
+      ...prevEmployee,
+      [name]: value,
+    }));
   };
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const handleSave = async () => {
+    try {
+      await axios.put(`http://localhost:8080/employees/update/${id}`, employee);
+      navigate("/");
+    } catch (error) {
+      console.error("Error updating employee:", error);
+    }
   };
-
 
   return (
     <div>
@@ -124,12 +130,16 @@ export default function Edit() {
               label="First Name"
               value={employee.first_name}
               variant="standard"
+              onChange={handleChange}
+              name="first_name"
             />
             <TextField
               id="last-name"
               label="Last Name"
               value={employee.last_name}
               variant="standard"
+              onChange={handleChange}
+              name="last_name"
             />
           </Box>
           <Box
@@ -144,6 +154,8 @@ export default function Edit() {
               label="Email"
               value={employee.email}
               variant="standard"
+              onChange={handleChange}
+              name="email"
             />
           </Box>
           <Box
@@ -158,6 +170,8 @@ export default function Edit() {
               label="Gender"
               value={employee.gender}
               variant="standard"
+              onChange={handleChange}
+              name="gender"
             />
           </Box>
           <Box
@@ -170,14 +184,18 @@ export default function Edit() {
             <TextField
               id="job-title"
               label="Job Title"
+              onChange={handleChange}
+              name="job-title"
               value={employee.job_title}
               variant="standard"
             />
             <TextField
               id="department"
+              name="department"
               label="Department"
               value={employee.department}
               variant="standard"
+              onChange={handleChange}  
             />
           </Box>
         </Box>
@@ -199,11 +217,12 @@ export default function Edit() {
               background: "grey",
               cursor: "pointer",
               "&:hover": {
-                color: "",
+                color: "green",
                 background: "#e6e2f0",
               },
             }}
             type="submit"
+            onClick={handleSave}
           >
             Save
           </Button>
@@ -212,7 +231,7 @@ export default function Edit() {
               color: "white",
               background: "grey",
               cursor: "pointer",
-              "&:hover": { color: "", background: "#e6e2f0" },
+              "&:hover": { color: "red", background: "#e6e2f0" },
             }}
             type="button"
             onClick={handleCancel}
@@ -221,23 +240,6 @@ export default function Edit() {
           </Button>
         </Box>
 
-        <div>
-      {isEditable ? (
-        <TextField
-          value={value}
-          onChange={handleChange}
-          variant="outlined"
-          label="Editable Field"
-        />
-      ) : (
-        <div onClick={handleEditToggle}>
-          {value}
-        </div>
-      )}
-      <button onClick={handleEditToggle}>
-        {isEditable ? 'Save' : 'Edit'}
-      </button>
-    </div>
       </Card>
 
 
