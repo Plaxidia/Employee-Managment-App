@@ -5,6 +5,7 @@ import AddEmployee from "./pages/AddEmployee";
 //import App from "./App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import View from "./pages/viewpage";
+import Edit from "./pages/editpage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,7 +15,7 @@ root.render(
         <Route path="/" element={<Home />} />
         <Route path="/add-employee" element={<AddEmployee />} />
         <Route path="/view/:id" element={<View />} />
-        
+        <Route path="/edit/:id" element={<Edit />} />
       </Routes>
     </BrowserRouter>
   </div>

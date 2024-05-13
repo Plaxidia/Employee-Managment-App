@@ -29,6 +29,7 @@ import { styled } from "@mui/system";
 import AddEmployee from "./AddEmployee";
 import { useNavigate } from "react-router-dom";
 import View from "./viewpage";
+import Edit from "./editpage";
 
 function Home() {
   const StyledTableContainer = styled(TableContainer)({
@@ -87,6 +88,11 @@ const [showView, setView] = useState(false);
 const handleViewClick = (id) => {
   setView(true);
   Navigate(`/view/${id}`);// Navigate to the "/view" route
+};
+const [showEdit, setEdit] = useState(false);
+const handleEditClick = (id) => {
+  setEdit(true);
+  Navigate(`/edit/${id}`);// Navigate to the "/view" route
 };
 
   return (
@@ -212,6 +218,7 @@ const handleViewClick = (id) => {
                           />
                           {showView && <View/>}
                           <ModeEditOutlineOutlinedIcon
+                          onClick={() => handleEditClick(row.id)}
                             sx={{
                               display: "flex",
                               justifyContent: "center",
@@ -224,6 +231,7 @@ const handleViewClick = (id) => {
                               },
                             }}
                           />
+                          {showEdit && <Edit/>}
                           <DeleteOutlineOutlinedIcon
                             sx={{
                               display: "flex",
