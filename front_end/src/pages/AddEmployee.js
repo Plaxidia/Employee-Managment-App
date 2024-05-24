@@ -8,6 +8,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import ArrowBackIosNewSharpIcon from "@mui/icons-material/ArrowBackIosNewSharp";
 
 export default function AddEmployee(props) {
   useEffect(() => {
@@ -96,6 +97,7 @@ export default function AddEmployee(props) {
                 }}
                 onClick={() => navigate(-1)}
               >
+                <ArrowBackIosNewSharpIcon />
                 Back
               </Button>
             </Toolbar>

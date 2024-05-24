@@ -23,14 +23,13 @@ import {
   TableCell,
   Paper,
 } from "@mui/material";
-
 import { styled } from "@mui/system";
 // Import styled from @mui/system
 import AddEmployee from "./AddEmployee";
 import { useNavigate } from "react-router-dom";
 import View from "./viewpage";
 import Edit from "./editpage";
-
+import BasicPopover from "./pages/deletePopOver";
 function Home() {
   const StyledTableContainer = styled(TableContainer)({
     minWidth: 450,
@@ -89,10 +88,30 @@ const handleViewClick = (id) => {
   setView(true);
   Navigate(`/view/${id}`);// Navigate to the "/view" route
 };
+
 const [showEdit, setEdit] = useState(false);
 const handleEditClick = (id) => {
   setEdit(true);
   Navigate(`/edit/${id}`);// Navigate to the "/view" route
+};
+
+const [employeeDelete, setDelete] = useState(null);
+const [popoverAnchor, setPopoverAnchor] = useState(null);
+
+const handleClose = () => {
+  setPopoverAnchor(null);
+  setDelete(null);
+};
+const handleDelete = (event, id) => {
+  setDelete(id);
+  setPopoverAnchor(event.currentTarget);
+  
+};
+
+const handleDeleteConfirm = (id) => {
+  setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+  setDelete(null);
+  setPopoverAnchor(null);
 };
 
   return (
@@ -233,6 +252,7 @@ const handleEditClick = (id) => {
                           />
                           {showEdit && <Edit/>}
                           <DeleteOutlineOutlinedIcon
+                          onClick={() => handleDeleteConfirm(row.id)}
                             sx={{
                               display: "flex",
                               justifyContent: "center",
@@ -245,6 +265,15 @@ const handleEditClick = (id) => {
                               },
                             }}
                           />
+                           {employeeDelete && 
+                           <BasicPopover 
+                           id={employeeDelete}
+                           onDelete={handleDelete}
+                           anchorEl={popoverAnchor}
+                           onClose={handleClose}
+                         />
+                           }
+
                         </Box>
                       </td>
                     </TableCell>

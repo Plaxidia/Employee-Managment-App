@@ -6,7 +6,7 @@ import AddEmployee from "./pages/AddEmployee";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import View from "./pages/viewpage";
 import Edit from "./pages/editpage";
-
+import BasicPopover from "./pages/deletePopOver";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <div>
@@ -16,6 +16,7 @@ root.render(
         <Route path="/add-employee" element={<AddEmployee />} />
         <Route path="/view/:id" element={<View />} />
         <Route path="/edit/:id" element={<Edit />} />
+        <Route path="/delete/:id" element={<BasicPopover />} />
       </Routes>
     </BrowserRouter>
   </div>
