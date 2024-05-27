@@ -97,14 +97,39 @@ const handleEditClick = (id) => {
   Navigate(`/edit/${id}`);// Navigate to the "/view" route
 };
 
+
 const [employeeDelete, setDelete] = useState(null);
+const [anchorEl, setAnchorEl] = useState(null);
 const handleDeleteClick = (id) => {
   setDelete(id);
- 
-  Navigate(`/delete/${id}`);// Navigate to the "/view" route
+  setAnchorEl(document.body); // set the anchor to an arbitrary element
 };
 
+const handlePopoverClose = () => {
+  setDelete(null);
+  setAnchorEl(null);
+};
 
+const handleDeleteConfirm = async () => {
+  if (employeeDelete) {
+    try {
+      const response = await fetch(`http://localhost:8080/employee/delete/${employeeDelete}`, {
+        method: 'DELETE',
+      });
+      console.log(response)
+
+      if (response.ok) {
+        console.log(`Employee with ID ${employeeDelete} deleted`);
+        setRows(rows.filter((row) => row.id !== employeeDelete)); // Update the state to remove the deleted employee
+        handlePopoverClose();
+      } else {
+        console.error('Failed to delete the employee');
+      }
+    } catch (error) {
+      console.error('Error occurred while deleting the employee:', error);
+    }
+  }
+};
   return (
     <div>
       <Box>
@@ -258,10 +283,13 @@ const handleDeleteClick = (id) => {
                           />
                            {employeeDelete && 
                            <BasicPopover 
-                          //  id={employeeDelete}
-                          //  onDelete={handleDelete}
-                          //  anchorEl={popoverAnchor}
-                          //  onClose={handleClose}
+
+                           open={Boolean(anchorEl)}
+                           anchorEl={anchorEl}
+                           onClose={handlePopoverClose}
+                           onDelete={handleDeleteConfirm}
+                          
+                            
                          />
                            }
 
