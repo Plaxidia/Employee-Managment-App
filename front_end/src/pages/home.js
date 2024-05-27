@@ -196,9 +196,9 @@ const handleDeleteConfirm = async () => {
             <Table
               aria-label="table with sticky header"
               stickyHeader
-              stickyFooter
+              stickyfooter ="true"
               stripe="odd"
-              hoverRow
+              hoverrow ="true"
             >
               <TableHead
                 sx={{ position: "relative" }}
@@ -233,7 +233,7 @@ const handleDeleteConfirm = async () => {
                     <TableCell>{row.job_title}</TableCell>
                     <TableCell>{row.department}</TableCell>
                     <TableCell>
-                      <td>
+                      
                         <Box sx={{ display: "flex", width: "50%", gap: 1 }}>
                           <VisibilityOutlinedIcon
                             onClick={() => handleViewClick(row.id)}
@@ -294,7 +294,7 @@ const handleDeleteConfirm = async () => {
                            }
 
                         </Box>
-                      </td>
+                      
                     </TableCell>
                   </TableRow>
                 ))}
