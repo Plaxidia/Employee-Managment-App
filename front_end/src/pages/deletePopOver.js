@@ -1,292 +1,229 @@
+import * as React from "react";
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
+import Radio from "@mui/material/Radio";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import RadioGroup from "@mui/material/RadioGroup";
+import { useNavigate } from "react-router-dom";
+import ArrowBackIosNewSharpIcon from "@mui/icons-material/ArrowBackIosNewSharp";
 import { Box, Button } from "@mui/material";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-//import ArrowBackIosNewSharpIcon from "@mui/icons-material/ArrowBackIosNewSharp";
-import axios from "axios";
+import Card from "@mui/material/Card";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+export default function BasicPopover() {
+  
 
-import SearchIcon from "@mui/icons-material/Search";
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [employeeDelete, setDelete] = React.useState(null);
 
-import InputBase from "@mui/material/InputBase";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import React, { useEffect, useState } from "react";
-import {
-  TableContainer,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  Paper,
-} from "@mui/material";
+  const navigate = useNavigate();
 
-import { styled } from "@mui/system";
-// Import styled from @mui/system
-import AddEmployee from "./AddEmployee";
-import { useNavigate } from "react-router-dom";
-import View from "./viewpage";
-import Edit from "./editpage";
-import BasicPopover from "./pages/deletePopOver";
-function Home() {
-  const StyledTableContainer = styled(TableContainer)({
-    minWidth: 450,
-    maxWidth: 1050,
-    minHeight: 400,
-    maxHeight: 550,
-    border: "1px solid black",
-  });
-  const CenteredContainer = styled("div")({
-    display: "flex",
-    justifyContent: "center",
-    marginTop: 10,
-    height: "100vh", // Adjust as needed to center vertically
-  });
-  const [rows, setRows] = useState([]); // State to store fetched data
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    setDelete(event.currentTarget.dataset.id); // Assuming the button has a data-id attribute
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setDelete(null);
+
+    if (window.location.pathname !== "/") {
+           //If not, navigate to "/"
+          navigate("/");
+    }
+
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+
+  
+  const handleDeleteConfirm = async () => {
+    
+    if (employeeDelete) {
       try {
-        const res = await axios.get("http://localhost:8080/employees"); // Replace with your backend endpoint
-        setRows(res.data); // Set the fetched data to the state
+        
+        const response = await fetch(`http://localhost:8080/employee/delete/ ${employeeDelete}`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          console.log(`Employee with ID ${employeeDelete} deleted`);
+          // Optionally update the state or trigger a re-fetch of the employee list
+          handleClose();
+          if (window.location.pathname !== "/") {
+            navigate("/");
+          }
+        } else {
+          console.error('Failed to delete the employee');
+        }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error occurred while deleting the employee:', error);
       }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    // Disable scrolling when the component mounts
-    document.body.style.overflow = "hidden";
-    // Re-enable scrolling when the component unmounts
-    return () => {
-      document.body.style.overflow = "fixed";
-    };
-   }, []);
-
-  const [searchTerm, setSearchedITerm] = useState('');
+    }
+  };
   
-  const filteredRows = rows.filter((row) =>
-  Object.values(row).some((value) =>
-    typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
-  )
-);
-
-const Navigate = useNavigate();
-const [showAddEmployee, setShowAddEmployee] = useState(false);
-
-const handleAddEmployeeClick = () => {
-  setShowAddEmployee(true);
-  Navigate("/add-employee");// Navigate to the "/add-employee" route
-};
-const [showView, setView] = useState(false);
-
-const handleViewClick = (id) => {
-  setView(true);
-  Navigate(`/view/${id}`);// Navigate to the "/view" route
-};
-
-const [showEdit, setEdit] = useState(false);
-const handleEditClick = (id) => {
-  setEdit(true);
-  Navigate(`/edit/${id}`);// Navigate to the "/view" route
-};
-
-const [employeeDelete, setDelete] = useState(null);
-const [popoverAnchor, setPopoverAnchor] = useState(null);
-
-const handleClose = () => {
-  setPopoverAnchor(null);
-  setDelete(null);
-};
-const handleDelete = (event, id) => {
-  setDelete(id);
-  setPopoverAnchor(event.currentTarget);
-  
-};
-
-const handleDeleteConfirm = (id) => {
-  setRows((prevRows) => prevRows.filter((row) => row.id !== id));
-  setDelete(null);
-  setPopoverAnchor(null);
-};
+  const handleCancel = () => {
+    handleClose();
+  };
 
   return (
+
     <div>
       <Box>
-        <Box sx={{ flexGrow: 1, 
-           }}>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar
+          position="static"
+          sx={{ backgroundColor: "grey", color: "white" }}
+        >
+          <Toolbar>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Employee Management App
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </Box>
+       <Card
+        sx={{
+          marginTop: 4,
+          marginLeft: "28%",
+          borderColor: "black",
+          position: "static",
+          backgroundColor: "White",
+          color: "grey",
+          maxWidth: 620,
+        }}
+      > 
+        <Box sx={{ flexGrow: 1, marginTop: 0 }}>
           <AppBar
             position="static"
-            sx={{ backgroundColor: "grey", color: "white" }}
-            >
+            sx={{ backgroundColor: "lightgrey", color: "white" }}
+          >
             <Toolbar>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Employee Managmment App
+                Delete Employee
               </Typography>
+              <Box
+          sx={{
+            "& > :not(style)": { m: 1 },
+            position: "relative",
+            bottom: 0,
+            right: 0,
+            display: "flex",
+            justifyContent: "flex-end",
+            padding: "8px",
+          }}
+         >
+
+        
+
+              <Button
+               aria-describedby={id} 
+               variant="contained" 
+               onClick={handleClick}
+               sx={{
+               "&:hover": {
+
+                color: "color"
+               }
+              }}
+               >
+               Delete
+               </Button>
+              <Button
+                sx={{
+                  color: "white",
+                  background: "grey",
+                  cursor: "pointer",
+                  "&:hover": { color: "", background: "#e6e2f0" },
+                }}
+                onClick={() => navigate(-1)}
+              >
+
+                <ArrowBackIosNewSharpIcon />
+                Back
+              </Button>
+              </Box>
             </Toolbar>
           </AppBar>
         </Box>
-        {/* Search and button */}
-        <Paper
         
-          component="form"
+      
+       <Popover
+        sx={{
+          maxHeight: 1500,
+          maxWidth: 1500,
+        }}
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+       >
+        <Typography sx={{ p: 2 }}>
+          Are you sure you want to delete this employee?.
+        </Typography>
+        <FormControl>
+          <RadioGroup
+            sx={{
+              marginLeft: 3,
+            }}
+            //onClick={(e) => this.deleteRow(post.id, e)}
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+          >
+            <FormControlLabel
+              value="female"
+              control={<Radio />}
+              label="Yes"
+              onClick={handleDeleteConfirm}
+            />
+
+            <FormControlLabel
+              value="male"
+              control={<Radio />}
+              label="No"
+              onClick={handleCancel}
+            />
+          </RadioGroup>
+        </FormControl>
+
+        <Box
           sx={{
-            p: "2px 4px",
-            marginLeft: 23,
-            marginTop:2,
-            alignItems: "center",
+            "& > :not(style)": { m: 1 },
+            position: "relative",
+            bottom: 0,
+            right: 0,
             display: "flex",
-            justifyContent: "center",
-            minWidth: 450,
-            maxWidth: 1050,
+            justifyContent: "flex-end",
+            padding: "8px",
           }}
         >
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder="Search an Employee"
-            inputProps={{ "aria-label": "search an" }}
-            value={searchTerm} onChange={(e) => setSearchedITerm(e.target.value)}   
-          />
-          <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-            <SearchIcon />
-          </IconButton>
-          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-          {
-          }
+          
           <Button
-            onClick={handleAddEmployeeClick}
-        sx={{
-          color: "white",
-          p: "10px",
-          background: "grey",
-          "&:hover": {
-            color: "white",
-            background: "lightgrey",
-          },
-        }
-    }
-      >
-        Add New employee
-      </Button>
-      {showAddEmployee && <AddEmployee/>}
-        </Paper>
-        {/* table */}
-        <CenteredContainer>
-          <StyledTableContainer component={Paper}>
-            <Table
-              aria-label="table with sticky header"
-              stickyHeader
-              stickyFooter
-              stripe="odd"
-              hoverRow
-            >
-              <TableHead
-                sx={{ position: "relative" }}
-              >
-                <TableRow
-                  sx={{
-                    "& th": {
-                      color: "white",
-                      fontSize: 20,
-                      backgroundColor: "grey",
-                    },
-                  }}
-                >
-                  <TableCell>First Name</TableCell>
-                  <TableCell>Last Name</TableCell>
-                  <TableCell>Gender</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Job Title</TableCell>
-                  <TableCell>Department</TableCell>
-                  <TableCell align="center">Actions</TableCell>
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {filteredRows.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{row.first_name}</TableCell>
-                    <TableCell>{row.last_name}</TableCell>
-                    <TableCell>{row.email}</TableCell>
-                    <TableCell>{row.gender}</TableCell>
-
-                    <TableCell>{row.job_title}</TableCell>
-                    <TableCell>{row.department}</TableCell>
-                    <TableCell>
-                      <td>
-                        <Box sx={{ display: "flex", width: "50%", gap: 1 }}>
-                          <VisibilityOutlinedIcon
-                            onClick={() => handleViewClick(row.id)}
-                          
-                            sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              borderRadius: "50%",
-                              alignItems: "center",
-                              cursor: "pointer",
-                              "&:hover": {
-                                color: "green",
-                                background: "#e6e2f0",
-                              },
-                            }}
-                            
-                          />
-                          {showView && <View/>}
-                          <ModeEditOutlineOutlinedIcon
-                          onClick={() => handleEditClick(row.id)}
-                            sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              borderRadius: "50%",
-                              alignItems: "center",
-                              cursor: "pointer",
-                              "&:hover": {
-                                color: "Blue",
-                                background: "#e6e2f0",
-                              },
-                            }}
-                          />
-                          {showEdit && <Edit/>}
-                          <DeleteOutlineOutlinedIcon
-                          onClick={() => handleDeleteConfirm(row.id)}
-                            sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              borderRadius: "50%",
-                              alignItems: "center",
-                              cursor: "pointer",
-                              "&:hover": {
-                                color: "red",
-                                background: "#e6e2f0",
-                              },
-                            }}
-                          />
-                           {employeeDelete && 
-                           <BasicPopover 
-                           id={employeeDelete}
-                           onDelete={handleDelete}
-                           anchorEl={popoverAnchor}
-                           onClose={handleClose}
-                         />
-                           }
-
-                        </Box>
-                      </td>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </StyledTableContainer>
-        </CenteredContainer>
-      </Box>
-    </div>
+            sx={{
+              color: "white",
+              background: "grey",
+              cursor: "pointer",
+              "&:hover": { color: "red", background: "#e6e2f0" },
+            }}
+            type="button"
+            onClick={handleCancel}
+          >
+            Cancel
+          </Button>
+        </Box>
+        </Popover> 
+        
+      </Card> 
+    </Box>
+  </div>   
   );
 }
-
-export default Home;
+  

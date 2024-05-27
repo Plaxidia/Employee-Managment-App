@@ -29,7 +29,7 @@ import AddEmployee from "./AddEmployee";
 import { useNavigate } from "react-router-dom";
 import View from "./viewpage";
 import Edit from "./editpage";
-import BasicPopover from "./pages/deletePopOver";
+import BasicPopover from "./deletePopOver";
 function Home() {
   const StyledTableContainer = styled(TableContainer)({
     minWidth: 450,
@@ -89,6 +89,8 @@ const handleViewClick = (id) => {
   Navigate(`/view/${id}`);// Navigate to the "/view" route
 };
 
+
+
 const [showEdit, setEdit] = useState(false);
 const handleEditClick = (id) => {
   setEdit(true);
@@ -96,23 +98,12 @@ const handleEditClick = (id) => {
 };
 
 const [employeeDelete, setDelete] = useState(null);
-const [popoverAnchor, setPopoverAnchor] = useState(null);
-
-const handleClose = () => {
-  setPopoverAnchor(null);
-  setDelete(null);
-};
-const handleDelete = (event, id) => {
+const handleDeleteClick = (id) => {
   setDelete(id);
-  setPopoverAnchor(event.currentTarget);
-  
+ 
+  Navigate(`/delete/${id}`);// Navigate to the "/view" route
 };
 
-const handleDeleteConfirm = (id) => {
-  setRows((prevRows) => prevRows.filter((row) => row.id !== id));
-  setDelete(null);
-  setPopoverAnchor(null);
-};
 
   return (
     <div>
@@ -252,7 +243,7 @@ const handleDeleteConfirm = (id) => {
                           />
                           {showEdit && <Edit/>}
                           <DeleteOutlineOutlinedIcon
-                          onClick={() => handleDeleteConfirm(row.id)}
+                          onClick={() => handleDeleteClick(row.id)}
                             sx={{
                               display: "flex",
                               justifyContent: "center",
@@ -267,10 +258,10 @@ const handleDeleteConfirm = (id) => {
                           />
                            {employeeDelete && 
                            <BasicPopover 
-                           id={employeeDelete}
-                           onDelete={handleDelete}
-                           anchorEl={popoverAnchor}
-                           onClose={handleClose}
+                          //  id={employeeDelete}
+                          //  onDelete={handleDelete}
+                          //  anchorEl={popoverAnchor}
+                          //  onClose={handleClose}
                          />
                            }
 
