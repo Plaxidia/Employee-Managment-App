@@ -100,6 +100,8 @@ const handleEditClick = (id) => {
 
 const [employeeDelete, setDelete] = useState(null);
 const [anchorEl, setAnchorEl] = useState(null);
+const [loading, setLoading] = useState(false); // Add loading state
+
 const handleDeleteClick = (id) => {
   setDelete(id);
   setAnchorEl(document.body); // set the anchor to an arbitrary element
@@ -108,10 +110,14 @@ const handleDeleteClick = (id) => {
 const handlePopoverClose = () => {
   setDelete(null);
   setAnchorEl(null);
+  setLoading(false);
 };
 
 const handleDeleteConfirm = async () => {
+  console.log("yes clicked");
   if (employeeDelete) {
+    console.log(`Attempting to delete employee with ID: ${employeeDelete}`); // Add log
+    setLoading(true); // Set loading state
     try {
       const response = await fetch(`http://localhost:8080/employee/delete/${employeeDelete}`, {
         method: 'DELETE',
@@ -127,8 +133,12 @@ const handleDeleteConfirm = async () => {
       }
     } catch (error) {
       console.error('Error occurred while deleting the employee:', error);
+    }finally {
+      setLoading(false); // Reset loading state
     }
+    console.log('No employee selected for deletion'); // Add log
   }
+  
 };
   return (
     <div>
@@ -288,6 +298,7 @@ const handleDeleteConfirm = async () => {
                            anchorEl={anchorEl}
                            onClose={handlePopoverClose}
                            onDelete={handleDeleteConfirm}
+                           loading={loading} // Pass the loading state
                           
                             
                          />

@@ -4,7 +4,9 @@ import Typography from "@mui/material/Typography";
 
 import { Box, Button } from "@mui/material";
 
-export default function BasicPopover({employeeDelete, onClose ,id, anchorEl, open, handleDeleteConfirm}) {
+export default function BasicPopover({
+  //employeeDelete, 
+  loading,onClose ,id, anchorEl, open, onDelete}) {
   
 
   return (
@@ -61,9 +63,11 @@ export default function BasicPopover({employeeDelete, onClose ,id, anchorEl, ope
             }}
             type="button"
             
-            onClick={handleDeleteConfirm}
+            onClick={onDelete}
+            disabled={loading} // Disable button when loading
           >
-            Yes
+        
+            {loading ? 'Deleting...' : 'Yes'}
           </Button>
           <Button
             sx={{
